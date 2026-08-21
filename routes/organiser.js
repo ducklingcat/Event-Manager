@@ -196,7 +196,7 @@ router.get('/logout', (req, res) => {
 });
 
 /* Authentication middleware: every route registered on this router below this point requires an
-   active organiser session. Register, login and logout above stay reachable without one. */
+   active organiser session. Register, login and logout above stay reachable without one.*/
 function checkAuth(req, res, next) {
     if (req.session && req.session.organiserLoggedIn) {
         return next();
