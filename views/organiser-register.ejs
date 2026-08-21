@@ -1,0 +1,43 @@
+<%# start %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organiser Register</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <div class="container">
+        <p class="back-link"><a class="button secondary" href="/">&larr; Back to Main Home</a></p>
+
+        <div class="page-header">
+            <h1>Organiser Register</h1>
+        </div>
+
+        <% if (errors.length > 0) { %>
+            <div class="error-messages">
+                <ul>
+                    <% errors.forEach(function(message) { %>
+                        <li><%= message %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+
+        <form class="stacked" action="/organiser/register" method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="<%= username %>" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <div class="form-actions">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+
+        <p class="nav-links">Already have an account? <a href="/organiser/login">Log in</a></p>
+    </div>
+</body>
+</html>
+<%# end %>

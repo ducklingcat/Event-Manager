@@ -1,0 +1,96 @@
+<%# start %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendee Event Page - <%= event.title %></title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <div class="container">
+        <p class="back-link"><a class="button secondary" href="/attendee">&larr; Back to Attendee Home</a></p>
+
+        <div class="page-header">
+            <h1>Attendee Event Page</h1>
+            <h2><%= event.title %></h2>
+            <p><%= event.description %></p>
+            <p class="event-meta">Date: <%= event.event_date || 'Not set' %></p>
+        </div>
+
+        <div class="event-meta">
+            Hosted by <strong><%= event.organiser_site_name %></strong>
+            <p><%= event.organiser_site_description %></p>
+        </div>
+
+        <% if (event.isPast) { %>
+            <div class="error-messages">
+                <p>This event has already taken place.</p>
+            </div>
+        <% } %>
+
+        <div class="ticket-types">
+            <table>
+                <tr>
+                    <th>Ticket Type</th>
+                    <th>Price</th>
+                    <th>Available</th>
+                </tr>
+                <tr>
+                    <td>Full-price</td>
+                    <td>&pound;<%= event.full_price_cost %></td>
+                    <td><%= event.full_price_available > 0 ? event.full_price_available : 'Sold out' %></td>
+                </tr>
+                <tr>
+                    <td>Concession</td>
+                    <td>&pound;<%= event.concession_cost %></td>
+                    <td><%= event.concession_available > 0 ? event.concession_available : 'Sold out' %></td>
+                </tr>
+            </table>
+        </div>
+
+        <% if (errors.length > 0) { %>
+            <div class="error-messages">
+                <ul>
+                    <% errors.forEach(function(message) { %>
+                        <li><%= message %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+
+        <form class="stacked" action="/attendee/events/<%= event.event_id %>/book" method="POST">
+            <label for="attendee_name">Your Name</label>
+            <% if (event.full_price_available> 0 || event.concession_available > 0) { %>
+                <input type="text" id="attendee_name" name="attendee_name" value="<%= formValues.attendee_name || '' %>" required>
+            <% } else { %>
+                <input type="text" id="attendee_name" name="attendee_name" value="<%= formValues.attendee_name || '' %>"disabled>
+            <% } %>
+
+            <label for="full_price_count">Number of Full-Price Tickets</label>
+            <% if (event.full_price_available > 0) { %>
+                <input type="number" id="full_price_count" name="full_price_count" value="<%= formValues.full_price_count || 0 %>" min="0" step="1">
+            <% } else { %>
+                <p class="empty-state">Sold out.</p>
+                <input type="number" id="full_price_count" name="full_price_count" value="0" min="0" max="0" disabled>
+            <% } %>
+
+            <label for="concession_count">Number of Concession Tickets</label>
+            <% if (event.concession_available > 0) { %>
+                <input type="number" id="concession_count" name="concession_count" value="<%= formValues.concession_count || 0 %>" min="0" step="1">
+            <% } else { %>
+                <p class="empty-state">Sold out.</p>
+                <input type="number" id="concession_count" name="concession_count" value="0" min="0" max="0" disabled>
+            <% } %>
+
+            <div class="form-actions">
+            <% if (event.full_price_available> 0 || event.concession_available > 0) { %>
+                <button type="submit">Book</button>
+            <% } else { %>
+                <button type="submit" disabled>Book</button>
+            <% } %>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+<%# end %>

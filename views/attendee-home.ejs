@@ -1,0 +1,38 @@
+<%# start %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendee Home Page - Event Manager</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <div class="container">
+        <p class="back-link"><a class="button secondary" href="/">&larr; Back to Main Home</a></p>
+
+        <div class="page-header">
+            <h1>Attendee Home Page</h1>
+            <p class="site-description">Upcoming events from all organisers.</p>
+        </div>
+
+        <h3>Upcoming Events</h3>
+        <% if (publishedEvents.length === 0) { %>
+            <p class="empty-state">There are no upcoming events at the moment.</p>
+        <% } else { %>
+            <ul class="event-list">
+                <% publishedEvents.forEach(function(event) { %>
+                    <li>
+                        <a href="/attendee/events/<%= event.event_id %>">
+                            <span class="event-title"><%= event.title %></span>
+                            <span class="event-meta">Date: <%= event.event_date || 'Not set' %></span>
+                            <div class="event-meta">Hosted by <%= event.organiser_site_name %></div>
+                            <div class="event-meta"><%= event.organiser_site_description %></div>
+                        </a>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
+    </div>
+</body>
+</html>
+<%# end %>

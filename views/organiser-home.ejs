@@ -1,0 +1,116 @@
+<%# start %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organiser Home Page - <%= siteSettings.site_name %></title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <div class="container">
+        <p class="back-link"><a class="button secondary" href="/">&larr; Back to Main Home</a></p>
+
+        <div class="page-header">
+            <h1>Organiser Home Page</h1>
+            <h2><%= siteSettings.site_name %></h2>
+            <p class="site-description"><%= siteSettings.site_description %></p>
+        </div>
+
+        <% if (success) { %>
+            <div class="success-message"><%= success %></div>
+        <% } %>
+
+        <% if (error) { %>
+            <div class="error-messages"><%= error %></div>
+        <% } %>
+
+        <div class="home-actions">
+            <form class="inline" action="/organiser/events" method="POST">
+                <button type="submit">Create New Event</button>
+            </form>
+            <a class="button secondary" href="/organiser/settings">Site Settings</a>
+            <a class="button secondary" href="/organiser/logout">Logout</a>
+        </div>
+
+        <h3>Published Events</h3>
+        <% if (publishedEvents.length === 0) { %>
+            <p class="empty-state">No events have been published yet.</p>
+        <% } else { %>
+            <ul class="event-list">
+                <% publishedEvents.forEach(function(event) { %>
+                    <li>
+                        <div class="event-title"><%= event.title %></div>
+                        <div class="event-meta">Date: <%= event.event_date || 'Not set' %></div>
+                        <div class="event-timestamps">Created <%= formatDateTime(event.created_at, { compact: true }) %> - Published <%= formatDateTime(event.published_at, { compact: true }) %></div>
+                        <div class="ticket-stats">
+                            <% [
+                                { label: 'Full-Price', booked: event.full_booked, capacity: event.full_price_tickets },
+                                { label: 'Concession', booked: event.concession_booked, capacity: event.concession_tickets }
+                            ].forEach(function(stat) { %>
+                                <div class="ticket-stat">
+                                    <div class="ticket-stat-label"><%= stat.label %></div>
+                                    <div class="ticket-stat-count"><%= stat.booked %> / <%= stat.capacity %> booked</div>
+                                    <% if (stat.capacity === 0) { %>
+                                        <div class="progress-bar disabled"><div class="progress-bar-fill"></div></div>
+                                    <% } else { %>
+                                        <div class="progress-bar"><div class="progress-bar-fill" style="width: <%= Math.round((stat.booked / stat.capacity) * 100) %>%"></div></div>
+                                    <% } %>
+                                </div>
+                            <% }); %>
+                        </div>
+                        <div class="event-actions">
+                            <a class="button secondary" href="/attendee/events/<%= event.event_id %>">Sharing Link</a>
+                            <a class="button secondary" href="/organiser/events/<%= event.event_id %>/sales">Sales</a>
+                            <form class="inline" action="/organiser/events/<%= event.event_id %>/delete" method="POST">
+                                <button type="submit" class="danger">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
+
+        <h3>Draft Events</h3>
+        <% if (draftEvents.length === 0) { %>
+            <p class="empty-state">No draft events.</p>
+        <% } else { %>
+            <ul class="event-list">
+                <% draftEvents.forEach(function(event) { %>
+                    <li>
+                        <div class="event-title"><%= event.title %></div>
+                        <div class="event-meta">Date: <%= event.event_date || 'Not set' %></div>
+                        <div class="event-timestamps">Created <%= formatDateTime(event.created_at, { compact: true }) %></div>
+                        <div class="ticket-stats">
+                            <% [
+                                { label: 'Full-Price', booked: event.full_booked, capacity: event.full_price_tickets },
+                                { label: 'Concession', booked: event.concession_booked, capacity: event.concession_tickets }
+                            ].forEach(function(stat) { %>
+                                <div class="ticket-stat">
+                                    <div class="ticket-stat-label"><%= stat.label %></div>
+                                    <div class="ticket-stat-count"><%= stat.booked %> / <%= stat.capacity %> booked</div>
+                                    <% if (stat.capacity === 0) { %>
+                                        <div class="progress-bar disabled"><div class="progress-bar-fill"></div></div>
+                                    <% } else { %>
+                                        <div class="progress-bar"><div class="progress-bar-fill" style="width: <%= Math.round((stat.booked / stat.capacity) * 100) %>%"></div></div>
+                                    <% } %>
+                                </div>
+                            <% }); %>
+                        </div>
+                        <div class="event-actions">
+                            <a class="button secondary" href="/organiser/events/<%= event.event_id %>/edit">Edit</a>
+                            <a class="button secondary" href="/organiser/events/<%= event.event_id %>/sales">Sales</a>
+                            <form class="inline" action="/organiser/events/<%= event.event_id %>/publish" method="POST">
+                                <button type="submit">Publish</button>
+                            </form>
+                            <form class="inline" action="/organiser/events/<%= event.event_id %>/delete" method="POST">
+                                <button type="submit" class="danger">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
+    </div>
+</body>
+</html>
+<%# end %>

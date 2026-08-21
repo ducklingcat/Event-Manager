@@ -1,0 +1,73 @@
+<%# start %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Sales - <%= event.title %></title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <div class="container">
+        <p class="back-link"><a class="button secondary" href="/organiser">&larr; Back to Organiser Home</a></p>
+
+        <div class="page-header">
+            <h1>Ticket Sales Report</h1>
+            <h2><%= event.title %></h2>
+        </div>
+
+        <% var totalSold = totals.full_price_count + totals.concession_count; %>
+        <div class="sales-chart-row">
+            <% if (totalSold === 0) { %>
+                <div class="sales-chart empty"></div>
+                <div class="sales-chart-legend">
+                    <p class="empty-state">No sales yet</p>
+                </div>
+            <% } else { %>
+                <% var fullPricePercent = (totals.full_price_count / totalSold) * 100; %>
+                <div class="sales-chart" style="background: conic-gradient(var(--accent) 0% <%= fullPricePercent %>%, var(--chart-concession) <%= fullPricePercent %>% 100%)"></div>
+                <div class="sales-chart-legend">
+                    <p><span class="sales-chart-swatch" style="background-color: var(--accent)"></span>Full-Price - <%= totals.full_price_count %> sold</p>
+                    <p><span class="sales-chart-swatch" style="background-color: var(--chart-concession)"></span>Concession - <%= totals.concession_count %> sold</p>
+                </div>
+            <% } %>
+        </div>
+
+        <% if (bookings.length === 0) { %>
+            <p class="empty-state">No bookings have been made for this event yet.</p>
+        <% } else { %>
+            <div class="ticket-types">
+                <table>
+                    <tr>
+                        <th>Attendee Name</th>
+                        <th>Purchase Date</th>
+                        <th>Full-Price Tickets</th>
+                        <th>Concession Tickets</th>
+                    </tr>
+                    <% bookings.forEach(function(booking) { %>
+                        <tr>
+                            <td><%= booking.attendee_name %></td>
+                            <td><%= formatDateTime(booking.booked_at) %></td>
+                            <td><%= booking.full_price_count %></td>
+                            <td><%= booking.concession_count %></td>
+                        </tr>
+                    <% }); %>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td></td>
+                        <td><strong><%= totals.full_price_count %></strong></td>
+                        <td><strong><%= totals.concession_count %></strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Remaining</strong></td>
+                        <td></td>
+                        <td><strong><%= event.full_price_tickets - totals.full_price_count %></strong></td>
+                        <td><strong><%= event.concession_tickets - totals.concession_count %></strong></td>
+                    </tr>
+                </table>
+            </div>
+        <% } %>
+
+    </div>
+</body>
+</html>
+<%# end %>

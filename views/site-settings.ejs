@@ -1,0 +1,48 @@
+<%# start %>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Site Settings Page</title>
+        <link rel="stylesheet" href="/main.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <p class="back-link"><a class="button secondary" href="/organiser">&larr; Back to Organiser Home</a></p>
+
+            <div class="page-header">
+                <h1>Site Settings Page</h1>
+            </div>
+
+            <% if (errors.length> 0) { %>
+                <div class="error-messages">
+                    <ul>
+                        <% errors.forEach(function(message) { %>
+                            <li>
+                                <%= message %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+                <% } %>
+
+                    <form class="stacked" action="/organiser/settings" method="POST">
+                        <label for="site_name">Site Name</label>
+                        <input type="text" id="site_name" name="site_name" value="<%= siteSettings.site_name %>"
+                            required>
+
+                        <label for="site_description">Site Description</label>
+                        <textarea id="site_description" name="site_description"
+                            required><%= siteSettings.site_description %></textarea>
+
+                        <div class="form-actions">
+                            <button type="submit">Save Settings</button>
+                        </div>
+                    </form>
+        </div>
+    </body>
+
+    </html>
+    <%# end %>

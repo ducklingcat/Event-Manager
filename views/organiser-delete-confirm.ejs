@@ -1,0 +1,33 @@
+<%# start %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Delete Event</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Confirm Delete Event</h1>
+        </div>
+
+        <div class="error-messages">
+            <p>
+                "<strong><%= event.title %></strong>" has
+                <strong><%= summary.booking_count %></strong> booking<%= summary.booking_count === 1 ? '' : 's' %>
+                totalling <strong><%= summary.ticket_count %></strong> ticket<%= summary.ticket_count === 1 ? '' : 's' %>.
+            </p>
+            <p>Deleting this event will permanently remove all of these bookings too. This cannot be undone.</p>
+        </div>
+
+        <div class="form-actions">
+            <form class="inline" action="/organiser/events/<%= event.event_id %>/delete/confirm" method="POST">
+                <button type="submit" class="danger">Yes, delete anyway</button>
+            </form>
+            <a class="button secondary" href="/organiser">Cancel</a>
+        </div>
+    </div>
+</body>
+</html>
+<%# end %>
