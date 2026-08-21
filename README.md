@@ -2,7 +2,7 @@
 
 ## Overview
 Event Manager is a multi-tenant application designed to streamline event creation and ticketing. It allows event organizers to easily publish and manage events while providing attendees with a seamless booking experience.
-*Note:* The application was developed locally prior to integrating Git for version control and deployment."
+*Note:* The application was developed locally prior to integrating Git for deployment and sharing.
 
 ## Key Features
 *   **Multi-Tenant Architecture:** Organizers register private accounts to independently manage their exclusive events and site settings.
