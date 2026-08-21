@@ -11,7 +11,7 @@ Event Manager is a multi-tenant application designed to streamline event creatio
 
 ## Live Demo & Access
 The application is currently hosted on Render. Because it utilizes a free tier, the server may take approximately 30 seconds to wake up upon your first visit.
-*   **Live Link:** [Insert your Render URL here]
+*   **Live Link:** https://event-manager-jbe0.onrender.com
 *   **Demo Username:** `organiser`
 *   **Demo Password:** `password123!`
 *   *Note:* The database resets automatically when the server sleeps, ensuring a fresh environment with pre-seeded example data for every new session.
