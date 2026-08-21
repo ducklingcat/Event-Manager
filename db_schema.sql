@@ -65,5 +65,32 @@ VALUES (1, 'organiser', '$2b$10$4g5QZp1pc6C8aB87tdqbfey.W65j6MgNwmUlqTOE64dbgvd.
 -- Site settings for the seeded organiser.
 INSERT INTO site_settings (organiser_id, site_name, site_description)
 VALUES (1, 'Stretch Yoga', 'Yoga classes for all ages and abilities');
+
+-- Seed Events
+INSERT INTO events (event_id, organiser_id, title, description, event_date, full_price_tickets, full_price_cost, concession_tickets, concession_cost, state, created_at, published_at) 
+VALUES 
+(1, 1, 'Morning Yoga Retreat', 'Start your day with a relaxing outdoor yoga session.', '2026-09-10', 20, 15.00, 10, 10.00, 'published', '2026-08-20T10:00:00.000Z', '2026-08-21T10:00:00.000Z'),
+(2, 1, 'Advanced Vinyasa Flow', 'Push your limits in this high-intensity 90-minute class.', '2026-09-15', 15, 20.00, 5, 12.00, 'published', '2026-08-20T11:00:00.000Z', '2026-08-21T11:00:00.000Z'),
+(3, 1, 'Beginner Basics', 'Perfect for those just starting their yoga journey.', '2026-09-20', 30, 10.00, 15, 5.00, 'published', '2026-08-21T09:00:00.000Z', '2026-08-21T09:30:00.000Z'),
+(4, 1, 'Sunset Meditation', 'A peaceful evening meditation session.', NULL, 0, 0, 0, 0, 'draft', '2026-08-21T12:00:00.000Z', NULL);
+
+-- Seed Bookings for Event 1
+INSERT INTO bookings (event_id, attendee_name, full_price_count, concession_count, booked_at) 
+VALUES 
+(1, 'Alice Smith', 1, 0, '2026-08-21T10:15:00.000Z'),
+(1, 'Bob Johnson', 2, 0, '2026-08-21T11:30:00.000Z'),
+(1, 'Charlie Brown', 0, 1, '2026-08-21T12:05:00.000Z'),
+(1, 'Diana Prince', 1, 1, '2026-08-21T13:45:00.000Z'),
+(1, 'Evan Wright', 2, 0, '2026-08-21T14:20:00.000Z'),
+(1, 'Fiona Gallagher', 0, 2, '2026-08-21T15:10:00.000Z');
+
+-- Seed Bookings for Event 2
+INSERT INTO bookings (event_id, attendee_name, full_price_count, concession_count, booked_at) 
+VALUES 
+(2, 'George Miller', 1, 0, '2026-08-21T10:30:00.000Z'),
+(2, 'Hannah Abbott', 1, 1, '2026-08-21T11:45:00.000Z'),
+(2, 'Ian Malcolm', 2, 0, '2026-08-21T14:15:00.000Z'),
+(2, 'Jane Doe', 1, 0, '2026-08-21T16:00:00.000Z'),
+(2, 'Kevin Bacon', 0, 1, '2026-08-21T17:25:00.000Z');
 --end
 COMMIT;
