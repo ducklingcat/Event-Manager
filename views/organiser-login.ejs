@@ -1,41 +1,53 @@
 <%# start %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Organiser Login</title>
-    <link rel="stylesheet" href="/main.css">
-</head>
-<body>
-    <div class="container">
-        <p class="back-link"><a class="button secondary" href="/">&larr; Back to Main Home</a></p>
+    <!DOCTYPE html>
+    <html lang="en">
 
-        <div class="page-header">
-            <h1>Organiser Login</h1>
+    <head>
+        <meta charset="UTF-8">
+        <title>Organiser Login</title>
+        <link rel="stylesheet" href="/main.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <p class="back-link"><a class="button secondary" href="/">&larr; Back to Main Home</a></p>
+
+            <div class="page-header">
+                <h1>Organiser Login</h1>
+            </div>
+
+            <% if (error) { %>
+                <div class="error-messages">
+                    <ul>
+                        <li>
+                            <%= error %>
+                        </li>
+                    </ul>
+                </div>
+                <% } %>
+
+                    <form class="stacked" action="/organiser/login" method="POST">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+
+                        <div
+                            style="background-color: #f0f8ff; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                            <p><strong>Demo Access</strong></p>
+                            <p>Username: <strong>organiser</strong></p>
+                            <p>Password: <strong>password123!</strong></p>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit">Log In</button>
+                        </div>
+                    </form>
+
+                    <p class="nav-links">Don't have an account? <a href="/organiser/register">Register</a></p>
         </div>
+    </body>
 
-        <% if (error) { %>
-            <div class="error-messages">
-                <ul>
-                    <li><%= error %></li>
-                </ul>
-            </div>
-        <% } %>
-
-        <form class="stacked" action="/organiser/login" method="POST">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-
-            <div class="form-actions">
-                <button type="submit">Log In</button>
-            </div>
-        </form>
-
-        <p class="nav-links">Don't have an account? <a href="/organiser/register">Register</a></p>
-    </div>
-</body>
-</html>
-<%# end %>
+    </html>
+    <%# end %>
