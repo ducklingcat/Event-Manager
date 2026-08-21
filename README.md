@@ -1,42 +1,23 @@
-## Event Manager — CM2040 Mid-Term Coursework
+# Event Manager
 
-### Installation requirements
+## Overview
+Event Manager is a multi-tenant application designed to streamline event creation and ticketing. It allows event organizers to easily publish and manage events while providing attendees with a seamless booking experience. 
 
-* NodeJS — https://nodejs.org/en/
-* SQLite3 — follow instructions at https://www.tutorialspoint.com/sqlite/sqlite_installation.htm 
+## Key Features
+*   **Multi-Tenant Architecture:** Organizers register private accounts to independently manage their exclusive events and site settings.
+*   **Sales Dashboard:** Organizers can track the performance of their published events using a visual pie chart breakdown of ticket sales.
+*   **Event Lifecycle Management:** Events can be saved as drafts and safely edited before being published to the public attendee board.
+*   **Smart Booking System:** Real-time capacity checks automatically prevent overbooking across both full-price and concession ticket tiers.
 
-### Running the app
+## Live Demo & Access
+The application is currently hosted on Render. Because it utilizes a free tier, the server may take approximately 30 seconds to wake up upon your first visit.
+*   **Live Link:** [Insert your Render URL here]
+*   **Demo Username:** `organiser`
+*   **Demo Password:** `password123!`
+*   *Note:* The database resets automatically when the server sleeps, ensuring a fresh environment with pre-seeded example data for every new session.
 
-* `npm install` - installs all node packages
-* `npm run build-db` (Mac/Linux) or `npm run build-db-win` (Windows) - creates database
-* `npm run start` - start serving the web app (Access via http://localhost:3000)
-
-### Organiser accounts
-
-The app is multi tenant. Any number of organisers can register their own account at
-http://localhost:3000/organiser/register, and each only ever sees/manages their own events and site settings. A default account has been created by `db_schema.sql`:
-
-* Username: `organiser`
-* Password: `password123!`
-
-Log in at http://localhost:3000/organiser/login. 
-All organiser routes (home, site settings, create/edit/publish/delete events) require login as the organiser.
-The attendee pages show events/organiser info from every organiser combined.
-
-### Additional npm packages
-
-* **bcrypt** — hashes the organiser's password before it's stored, and verifies login
-  attempts against the hash. Never store or compare plaintext passwords.
-* **express-session** — issues a signed session cookie so the server can tell whether
-  the current browser is logged in as the organiser without storing state client-side.
-* **express-validator** — server-side validation of submitted form fields such as
-  required text, non-negative integers/numbers, custom date rules, instead of string checks 
-
-### Project structure
-
-* `index.js` — app entry point, Express/EJS/SQLite/session setup, mounts routers
-* `routes/organiser.js` — organiser register/login/logout/home/settings/edit-event routes
-* `routes/attendee.js` — attendee home + event/booking routes
-* `views/.ejs` — server rendered templates
-* `public/main.css` — style
-* `db_schema.sql` — defines database tables
+## Technical Details
+*   **Core Stack:** Built with Node.js, Express, SQLite3, and EJS for server-rendered templates.
+*   **Security:** Utilizes `bcrypt` for secure password hashing and `express-session` for session management without storing state client-side.
+*   **Data Integrity:** Implements `express-validator` for robust server-side validation of all form submissions.
+*   **Local Setup:** To run locally, install dependencies with `npm install`, build the database with `npm run build-db`, and start the server using `npm run start`.
